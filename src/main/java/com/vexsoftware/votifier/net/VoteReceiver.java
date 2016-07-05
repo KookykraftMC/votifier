@@ -114,7 +114,7 @@ public class VoteReceiver
                 String address = this.readString(block, position += username.length() + 1);
                 String timeStamp = this.readString(block, position += address.length() + 1);
                 User u = ess.getUser(username);
-                if (u.getPlayer().hasPlayedBefore() == true || Bukkit.getPlayer((String)username) != null) {
+                if (u.getPlayer().hasPlayedBefore() || Bukkit.getPlayer((String)username) != null || Bukkit.getPlayer(username).isOnline()) {
                     final Vote vote = new Vote();
                     vote.setServiceName(serviceName);
                     vote.setUsername(username);
