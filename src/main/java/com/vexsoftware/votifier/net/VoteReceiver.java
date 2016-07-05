@@ -17,8 +17,6 @@
  - */
 package com.vexsoftware.votifier.net;
 
-import com.earth2me.essentials.Essentials;
-import com.earth2me.essentials.User;
 import com.vexsoftware.votifier.Votifier;
 import com.vexsoftware.votifier.crypto.RSA;
 import com.vexsoftware.votifier.model.Vote;
@@ -55,7 +53,6 @@ public class VoteReceiver
     private final int port;
     private ServerSocket server;
     private boolean running = true;
-    Essentials ess = (Essentials) Bukkit.getServer().getPluginManager().getPlugin("Essentials");
     public VoteReceiver(Votifier plugin, String host, int port) throws Exception {
         this.plugin = plugin;
         this.host = host;
@@ -113,8 +110,7 @@ public class VoteReceiver
                 String username = this.readString(block, position += serviceName.length() + 1);
                 String address = this.readString(block, position += username.length() + 1);
                 String timeStamp = this.readString(block, position += address.length() + 1);
-                User u = ess.getUser(username);
-                if (u.getPlayer().hasPlayedBefore() == true || Bukkit.getPlayer((String)username) != null) {
+                if (Bukkit.getPlayer(username).hasPlayedBefore() || Bukkit.getPlayer((String)username) != null || Bukkit.getPlayer(username).isOnline()) {
                     final Vote vote = new Vote();
                     vote.setServiceName(serviceName);
                     vote.setUsername(username);
